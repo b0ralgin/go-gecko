@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 
 	"github.com/superoo7/go-gecko/format"
@@ -146,6 +147,36 @@ func (c *Client) CoinsList() (*types.CoinList, error) {
 		return nil, err
 	}
 	return data, nil
+}
+
+func (c *Client) CoinsOHLC(id string, days int) ([]types.OHLC, error) {
+	params := url.Values{}
+	params.Add("vs_currency", "usd")
+	params.Add("days", strconv.Itoa(days))
+	url := fmt.Sprintf("%s/coins/%s/list?%s", baseURL, id, params.Encode())
+	resp, err := c.MakeReq(url)
+	if err != nil {
+		return nil, err
+	}
+
+	type olhc [5]float64
+
+	var data []olhc
+	err = json.Unmarshal(resp, &data)
+	if err != nil {
+		return nil, err
+	}
+	result := make([]types.OHLC, 0, len(data))
+	for _, i := range data {
+		result = append(result, types.OHLC{
+			Date:  int64(i[0]),
+			Open:  i[1],
+			Close: i[2],
+			High:  i[3],
+			Low:   i[4],
+		})
+	}
+	return result, nil
 }
 
 // CoinsMarket /coins/market
