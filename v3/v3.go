@@ -3,14 +3,13 @@ package coingecko
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/b0ralgin/go-gecko/format"
+	"github.com/b0ralgin/go-gecko/v3/types"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
-
-	"github.com/superoo7/go-gecko/format"
-	"github.com/superoo7/go-gecko/v3/types"
 )
 
 var baseURL = "https://api.coingecko.com/api/v3"
