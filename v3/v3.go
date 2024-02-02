@@ -154,6 +154,7 @@ func (c *Client) CoinsOHLC(id string, days int) ([]types.OHLC, error) {
 	params.Add("vs_currency", "usd")
 	params.Add("days", strconv.Itoa(days))
 	url := fmt.Sprintf("%s/coins/%s/olhc?%s", baseURL, id, params.Encode())
+	fmt.Println(url)
 	resp, err := c.MakeReq(url)
 	if err != nil {
 		return nil, err
