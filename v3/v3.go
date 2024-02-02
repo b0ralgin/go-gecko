@@ -3,13 +3,14 @@ package coingecko
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/b0ralgin/go-gecko/format"
-	"github.com/b0ralgin/go-gecko/v3/types"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
+
+	"github.com/b0ralgin/go-gecko/format"
+	"github.com/b0ralgin/go-gecko/v3/types"
 )
 
 var baseURL = "https://api.coingecko.com/api/v3"
@@ -152,7 +153,7 @@ func (c *Client) CoinsOHLC(id string, days int) ([]types.OHLC, error) {
 	params := url.Values{}
 	params.Add("vs_currency", "usd")
 	params.Add("days", strconv.Itoa(days))
-	url := fmt.Sprintf("%s/coins/%s/list?%s", baseURL, id, params.Encode())
+	url := fmt.Sprintf("%s/coins/%s/olhc?%s", baseURL, id, params.Encode())
 	resp, err := c.MakeReq(url)
 	if err != nil {
 		return nil, err
